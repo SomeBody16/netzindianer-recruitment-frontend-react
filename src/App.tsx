@@ -19,7 +19,11 @@ function App() {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <FeedPreview url='https://thingproxy.freeboard.io/fetch/https://www.gamespot.com/feeds/mashup/' />
+            <FeedPreview
+                url='https://www.gamespot.com/feeds/mashup/'
+                // Proxy is optional
+                proxy='https://thingproxy.freeboard.io/fetch/'
+            />
         </div>
     );
 }

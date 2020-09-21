@@ -14,8 +14,6 @@ import {
 import Skeleton from '@material-ui/lab/Skeleton';
 import ogParser from 'og-parser';
 
-const proxy = 'https://thingproxy.freeboard.io/fetch/';
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -43,8 +41,9 @@ const useStyles = makeStyles((theme: Theme) =>
 interface FeedItemProps {
     classes: ReturnType<typeof useStyles>;
     item: RssParser.Item;
+    proxy?: string;
 }
-const FeedItem = ({ classes, item }: FeedItemProps) => {
+const FeedItem = ({ classes, item, proxy }: FeedItemProps) => {
     const imageWidth = 355;
     const [ogImage, setOgImage] = React.useState<string>();
     React.useEffect(() => {
@@ -57,7 +56,7 @@ const FeedItem = ({ classes, item }: FeedItemProps) => {
             console.log({ err, data });
             setOgImage(data?.og?.image?.url);
         });
-    }, [item.link]);
+    }, [item.link, proxy]);
 
     const rtf = new Intl.RelativeTimeFormat('pl', { numeric: 'auto' });
     const hourDiff = Math.abs(Date.now() - new Date(item.isoDate || 0).getTime()) / (36e5 * -1);
@@ -103,6 +102,7 @@ const FeedItem = ({ classes, item }: FeedItemProps) => {
 
 interface Props {
     url: string;
+    proxy?: string;
 }
 
 function FeedPreview(props: Props) {
@@ -113,11 +113,11 @@ function FeedPreview(props: Props) {
     React.useEffect(() => {
         const loadFeed = async () => {
             const parser = new RssParser();
-            setFeed(await parser.parseURL(props.url));
+            setFeed(await parser.parseURL((props.proxy || '') + props.url));
             setIsLoading(false);
         };
         loadFeed();
-    }, [props.url]);
+    }, [props.url, props.proxy]);
 
     console.log({ feed });
     if (isLoading) {
@@ -130,7 +130,7 @@ function FeedPreview(props: Props) {
     return (
         <div className={classes.root}>
             {feed?.items?.map((item) => (
-                <FeedItem key={item.guid} {...{ classes, item }} />
+                <FeedItem key={item.guid} {...{ classes, item, proxy: props.proxy }} />
             ))}
         </div>
     );
