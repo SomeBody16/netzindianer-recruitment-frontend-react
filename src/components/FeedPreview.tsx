@@ -7,9 +7,14 @@ import {
     CardActionArea,
     CardContent,
     CardHeader,
+    CardMedia,
     CircularProgress,
     Typography,
 } from '@material-ui/core';
+import Skeleton from '@material-ui/lab/Skeleton';
+import ogParser from 'og-parser';
+
+const proxy = 'https://thingproxy.freeboard.io/fetch/';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -27,8 +32,10 @@ const useStyles = makeStyles((theme: Theme) =>
         feedItem: {
             margin: 'auto',
             marginBottom: theme.spacing(2),
-            width: '40%',
-            maxWidth: '90%',
+            width: '90%',
+        },
+        feedItemContent: {
+            display: 'flex',
         },
     })
 );
@@ -38,23 +45,57 @@ interface FeedItemProps {
     item: RssParser.Item;
 }
 const FeedItem = ({ classes, item }: FeedItemProps) => {
+    const imageWidth = 355;
+    const [ogImage, setOgImage] = React.useState<string>();
+    React.useEffect(() => {
+        if (!item.link) return;
+        ogParser(proxy + item.link, (err, data) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            console.log({ err, data });
+            setOgImage(data?.og?.image?.url);
+        });
+    }, [item.link]);
+
     const rtf = new Intl.RelativeTimeFormat('pl', { numeric: 'auto' });
     const hourDiff = Math.abs(Date.now() - new Date(item.isoDate || 0).getTime()) / (36e5 * -1);
     const pubDate = rtf.format(Math.floor(hourDiff), 'hour');
 
-    const shortenedContent = item.contentSnippet?.replace(/^(.{200}[^\s]*).*/s, '$1');
+    const shortenedContent = item.contentSnippet?.replace(/^(.{210}[^\s]*).*/s, '$1');
 
     const cardClickHandler = () => window.open(item.link, '_blank');
 
     return (
         <Card className={classes.feedItem} raised onClick={cardClickHandler}>
-            <CardActionArea>
-                <CardHeader title={item.title} subheader={pubDate} />
-                <CardContent>
-                    <Typography variant='body2' color='textSecondary'>
-                        {shortenedContent} ...
-                    </Typography>
-                </CardContent>
+            <CardActionArea className={classes.feedItemContent}>
+                <CardMedia
+                    component={() =>
+                        ogImage ? (
+                            <img
+                                src={ogImage}
+                                alt={item.title}
+                                width={imageWidth}
+                                height={imageWidth * (2 / 3)}
+                            />
+                        ) : (
+                            <Skeleton
+                                variant='rect'
+                                width={imageWidth}
+                                height={imageWidth * (2 / 3)}
+                            />
+                        )
+                    }
+                />
+                <div style={{ width: `calc(100% - ${imageWidth}px)` }}>
+                    <CardHeader title={item.title} subheader={pubDate} />
+                    <CardContent>
+                        <Typography variant='body2' color='textSecondary'>
+                            {shortenedContent} ...
+                        </Typography>
+                    </CardContent>
+                </div>
             </CardActionArea>
         </Card>
     );
