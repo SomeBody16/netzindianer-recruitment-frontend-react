@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Normalize } from 'styled-normalize';
+import { CssBaseline } from '@material-ui/core';
 
 ReactDOM.render(
     <React.StrictMode>
         <Normalize />
+        <CssBaseline />
         <App />
     </React.StrictMode>,
     document.getElementById('root')
