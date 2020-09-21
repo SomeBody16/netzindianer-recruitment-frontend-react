@@ -20,7 +20,7 @@ Szukanie ma się odbywać po tytule wpisu w kanale RSS.
 
 # Wykonanie:
 
-[Strona z rezultatem](url)
+[Strona z rezultatem](https://somebody16.github.io/netzindianer-recruitment-frontend-react/)
 
 ![Zrzut ekranu resultatu](preview.png)
 
