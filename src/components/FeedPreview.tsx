@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
 interface FeedItemProps {
     classes: ReturnType<typeof useStyles>;
     item: RssParser.Item;
-    proxy?: string;
+    proxy: string;
     show: boolean;
 }
 const FeedItem = ({ classes, item, proxy, show }: FeedItemProps) => {
@@ -69,9 +69,14 @@ const FeedItem = ({ classes, item, proxy, show }: FeedItemProps) => {
     const [ogImage, setOgImage] = React.useState<string>();
     React.useEffect(() => {
         if (!item.link) return;
+        const url = proxy + item.link;
+        console.warn({ url });
         ogParser(proxy + item.link, (err, data) => {
             if (err) {
                 console.error(err);
+                setOgImage(
+                    'https://images.wallpaperscraft.com/image/no_image_inscription_text_151413_1280x720.jpg'
+                );
                 return;
             }
             setOgImage(data?.og?.image?.url);
@@ -133,6 +138,7 @@ interface Props {
 }
 
 function FeedPreview(props: Props) {
+    let proxy = typeof props.proxy === 'undefined' ? '' : props.proxy;
     const classes = useStyles();
     const [feed, setFeed] = React.useState<RssParser.Output>();
     const [filter, setFilter] = React.useState<string>('');
@@ -144,11 +150,11 @@ function FeedPreview(props: Props) {
         setIsLoading(true);
         setIsError(false);
         parser
-            .parseURL((props.proxy || '') + props.url)
+            .parseURL(proxy + props.url)
             .then(setFeed)
             .catch(() => setIsError(true))
             .finally(() => setIsLoading(false));
-    }, [parser, props.proxy, props.url]);
+    }, [parser, proxy, props.url]);
     React.useEffect(loadFeedCallback, [loadFeedCallback]);
 
     if (isLoading || isError) {
@@ -190,7 +196,7 @@ function FeedPreview(props: Props) {
                         filter.length === 0 ||
                         item.title?.toLowerCase()?.indexOf(filter.toLowerCase()) !== -1
                     }
-                    {...{ classes, item, proxy: props.proxy }}
+                    {...{ classes, item, proxy }}
                 />
             ))}
         </div>

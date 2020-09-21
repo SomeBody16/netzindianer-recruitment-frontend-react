@@ -20,9 +20,9 @@ function App() {
     return (
         <div className={classes.root}>
             <FeedPreview
-                url='https://www.gamespot.com/feeds/mashup/'
+                url='https://codepen.io/picks/feed/'
                 // Proxy is optional (url will be appended at end of proxy url)
-                proxy='https://thingproxy.freeboard.io/fetch/'
+                // proxy='https://thingproxy.freeboard.io/fetch/'
             />
         </div>
     );
