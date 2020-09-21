@@ -6,10 +6,10 @@ import FeedPreview from './components/FeedPreview';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
+            overflowX: 'hidden',
             width: '100vw',
             height: '100vh',
             display: 'flex',
-            alignContent: 'center',
             justifyContent: 'center',
         },
     })
@@ -19,7 +19,7 @@ function App() {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <FeedPreview url='https://www.gamespot.com/feeds/mashup/' />
+            <FeedPreview url='https://thingproxy.freeboard.io/fetch/https://www.gamespot.com/feeds/mashup/' />
         </div>
     );
 }
