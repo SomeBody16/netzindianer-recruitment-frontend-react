@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/netzindianer-recruitment-frontend-react/static/js/main.ffde59ed.chunk.js",
-    "main.js.map": "/netzindianer-recruitment-frontend-react/static/js/main.ffde59ed.chunk.js.map",
+    "main.js": "/netzindianer-recruitment-frontend-react/static/js/main.e0f67c86.chunk.js",
+    "main.js.map": "/netzindianer-recruitment-frontend-react/static/js/main.e0f67c86.chunk.js.map",
     "runtime-main.js": "/netzindianer-recruitment-frontend-react/static/js/runtime-main.3f8b5eb6.js",
     "runtime-main.js.map": "/netzindianer-recruitment-frontend-react/static/js/runtime-main.3f8b5eb6.js.map",
     "static/js/2.0f205a8d.chunk.js": "/netzindianer-recruitment-frontend-react/static/js/2.0f205a8d.chunk.js",
     "static/js/2.0f205a8d.chunk.js.map": "/netzindianer-recruitment-frontend-react/static/js/2.0f205a8d.chunk.js.map",
     "index.html": "/netzindianer-recruitment-frontend-react/index.html",
-    "precache-manifest.061b1e781a7bbbc155a4dada59ebde73.js": "/netzindianer-recruitment-frontend-react/precache-manifest.061b1e781a7bbbc155a4dada59ebde73.js",
+    "precache-manifest.d993baebfb5095df8463dd43fa341d74.js": "/netzindianer-recruitment-frontend-react/precache-manifest.d993baebfb5095df8463dd43fa341d74.js",
     "service-worker.js": "/netzindianer-recruitment-frontend-react/service-worker.js",
     "static/js/2.0f205a8d.chunk.js.LICENSE.txt": "/netzindianer-recruitment-frontend-react/static/js/2.0f205a8d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.3f8b5eb6.js",
     "static/js/2.0f205a8d.chunk.js",
-    "static/js/main.ffde59ed.chunk.js"
+    "static/js/main.e0f67c86.chunk.js"
   ]
 }

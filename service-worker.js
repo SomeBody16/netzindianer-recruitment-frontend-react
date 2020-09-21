@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/netzindianer-recruitment-frontend-react/precache-manifest.061b1e781a7bbbc155a4dada59ebde73.js"
+  "/netzindianer-recruitment-frontend-react/precache-manifest.d993baebfb5095df8463dd43fa341d74.js"
 );
 
 self.addEventListener('message', (event) => {

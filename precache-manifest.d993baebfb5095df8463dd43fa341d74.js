@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9534b1942f9809f4eb59afdab82a901a",
+    "revision": "d965f86ae03c6e842d9e49330ab94e39",
     "url": "/netzindianer-recruitment-frontend-react/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/netzindianer-recruitment-frontend-react/static/js/2.0f205a8d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "e024a84c4edcee627b8a",
-    "url": "/netzindianer-recruitment-frontend-react/static/js/main.ffde59ed.chunk.js"
+    "revision": "ee6cf16ab655680025a6",
+    "url": "/netzindianer-recruitment-frontend-react/static/js/main.e0f67c86.chunk.js"
   },
   {
     "revision": "59f7fef10c56669bfd16",
