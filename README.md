@@ -1,44 +1,45 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Zadanie:
 
-## Available Scripts
+### Utwórz komponent/widżet podglądu treści kanału RSS
 
-In the project directory, you can run:
+1. Utwórz komponent o nazwie FeedPreview.
 
-### `npm start`
+2. Komponent jako argument props `url` przyjmuje url do kanału RSS.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+3. Komponent ma wyświetlać podgląd aktualnych treści w kanale RSS.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+4. Widok ma być ostylowany tak, aby był przyjazny dla internauty.
 
-### `npm test`
+5. Funkcja szukania.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Komponent ma posiadać pole input do szukania wśród wpisów.
 
-### `npm run build`
+Szukanie ma się odbywać po tytule wpisu w kanale RSS.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+6. Kiedy nie można pobrać danych pod danym adresem url, ma się wyświetlić komunikat o błędzie i przycisk do ponowienia pobrania.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+# Wykonanie:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+[Strona z rezultatem](url)
 
-### `npm run eject`
+![Zrzut ekranu resultatu](preview.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Notatki:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+-   Użyta technologia: **_React.js_**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+-   Komponent przyjmuje argumenty `url` oraz `proxy`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+-   `url` - adres url kanału RSS.
 
-## Learn More
+-   `proxy` - adres url serwera proxy (`url` będzie dopisany na koniec `proxy`)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+-   Użyte biblioteki:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+-   [Material-UI](https://material-ui.com)
+
+-   [og-parser](https://www.npmjs.com/package/og-parser)
+
+-   [rss-parser](https://www.npmjs.com/package/rss-parser)
+
+-   [styled-normalize](https://www.npmjs.com/package/styled-normalize)

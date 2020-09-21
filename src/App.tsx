@@ -21,7 +21,7 @@ function App() {
         <div className={classes.root}>
             <FeedPreview
                 url='https://www.gamespot.com/feeds/mashup/'
-                // Proxy is optional
+                // Proxy is optional (url will be appended at end of proxy url)
                 proxy='https://thingproxy.freeboard.io/fetch/'
             />
         </div>

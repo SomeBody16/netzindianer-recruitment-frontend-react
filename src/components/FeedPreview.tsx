@@ -74,7 +74,6 @@ const FeedItem = ({ classes, item, proxy, show }: FeedItemProps) => {
                 console.error(err);
                 return;
             }
-            console.log({ err, data });
             setOgImage(data?.og?.image?.url);
         });
     }, [item.link, proxy]);
