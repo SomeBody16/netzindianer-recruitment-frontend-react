@@ -42,13 +42,17 @@ const FeedItem = ({ classes, item }: FeedItemProps) => {
     const hourDiff = Math.abs(Date.now() - new Date(item.isoDate || 0).getTime()) / (36e5 * -1);
     const pubDate = rtf.format(Math.floor(hourDiff), 'hour');
 
+    const shortenedContent = item.contentSnippet?.replace(/^(.{200}[^\s]*).*/s, '$1');
+
+    const cardClickHandler = () => window.open(item.link, '_blank');
+
     return (
-        <Card className={classes.feedItem}>
+        <Card className={classes.feedItem} raised onClick={cardClickHandler}>
             <CardActionArea>
                 <CardHeader title={item.title} subheader={pubDate} />
                 <CardContent>
-                    <Typography noWrap variant='body2' color='textSecondary'>
-                        {item.contentSnippet}
+                    <Typography variant='body2' color='textSecondary'>
+                        {shortenedContent} ...
                     </Typography>
                 </CardContent>
             </CardActionArea>
