@@ -3,28 +3,42 @@ import { Theme, createStyles } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
 import RssParser from 'rss-parser';
 import {
+    Button,
     Card,
     CardActionArea,
     CardContent,
     CardHeader,
     CardMedia,
     CircularProgress,
+    InputAdornment,
+    TextField,
     Typography,
 } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 import Skeleton from '@material-ui/lab/Skeleton';
 import ogParser from 'og-parser';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            maxWidth: '100vw',
+            width: '100vw',
             marginTop: theme.spacing(2),
         },
-        isLoading: {
+        flexCenter: {
             height: '100vh',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+        },
+        error: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+
+            '& button': {
+                marginTop: theme.spacing(3),
+            },
         },
 
         feedItem: {
@@ -35,6 +49,12 @@ const useStyles = makeStyles((theme: Theme) =>
         feedItemContent: {
             display: 'flex',
         },
+
+        searchField: {
+            width: '90%',
+            marginLeft: '5%',
+            marginBottom: theme.spacing(3),
+        },
     })
 );
 
@@ -42,8 +62,9 @@ interface FeedItemProps {
     classes: ReturnType<typeof useStyles>;
     item: RssParser.Item;
     proxy?: string;
+    show: boolean;
 }
-const FeedItem = ({ classes, item, proxy }: FeedItemProps) => {
+const FeedItem = ({ classes, item, proxy, show }: FeedItemProps) => {
     const imageWidth = 355;
     const [ogImage, setOgImage] = React.useState<string>();
     React.useEffect(() => {
@@ -67,7 +88,14 @@ const FeedItem = ({ classes, item, proxy }: FeedItemProps) => {
     const cardClickHandler = () => window.open(item.link, '_blank');
 
     return (
-        <Card className={classes.feedItem} raised onClick={cardClickHandler}>
+        <Card
+            className={classes.feedItem}
+            style={{
+                display: show ? 'block' : 'none',
+            }}
+            raised
+            onClick={cardClickHandler}
+        >
             <CardActionArea className={classes.feedItemContent}>
                 <CardMedia
                     component={() =>
@@ -108,29 +136,63 @@ interface Props {
 function FeedPreview(props: Props) {
     const classes = useStyles();
     const [feed, setFeed] = React.useState<RssParser.Output>();
+    const [filter, setFilter] = React.useState<string>('');
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
+    const [isError, setIsError] = React.useState<boolean>(false);
 
-    React.useEffect(() => {
-        const loadFeed = async () => {
-            const parser = new RssParser();
-            setFeed(await parser.parseURL((props.proxy || '') + props.url));
-            setIsLoading(false);
-        };
-        loadFeed();
-    }, [props.url, props.proxy]);
+    const [parser] = React.useState<RssParser>(new RssParser());
+    const loadFeedCallback = React.useCallback(() => {
+        setIsLoading(true);
+        setIsError(false);
+        parser
+            .parseURL((props.proxy || '') + props.url)
+            .then(setFeed)
+            .catch(() => setIsError(true))
+            .finally(() => setIsLoading(false));
+    }, [parser, props.proxy, props.url]);
+    React.useEffect(loadFeedCallback, [loadFeedCallback]);
 
-    console.log({ feed });
-    if (isLoading) {
+    if (isLoading || isError) {
         return (
-            <div className={classes.isLoading}>
-                <CircularProgress color='secondary' />
+            <div className={classes.flexCenter}>
+                {isLoading && <CircularProgress color='secondary' />}
+                {isError && (
+                    <div className={classes.error}>
+                        <Typography variant='h4'>Nie można załadować kanału</Typography>
+                        <Button variant='contained' color='secondary' onClick={loadFeedCallback}>
+                            Spróbuj ponownie
+                        </Button>
+                    </div>
+                )}
             </div>
         );
     }
     return (
         <div className={classes.root}>
+            <TextField
+                className={classes.searchField}
+                label='Przeszukaj kanał'
+                variant='outlined'
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position='end'>
+                            <SearchIcon />
+                        </InputAdornment>
+                    ),
+                }}
+            />
+
             {feed?.items?.map((item) => (
-                <FeedItem key={item.guid} {...{ classes, item, proxy: props.proxy }} />
+                <FeedItem
+                    key={item.guid}
+                    show={
+                        filter.length === 0 ||
+                        item.title?.toLowerCase()?.indexOf(filter.toLowerCase()) !== -1
+                    }
+                    {...{ classes, item, proxy: props.proxy }}
+                />
             ))}
         </div>
     );
