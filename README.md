@@ -35,11 +35,7 @@ Szukanie ma się odbywać po tytule wpisu w kanale RSS.
 -   `proxy` - adres url serwera proxy (`url` będzie dopisany na koniec `proxy`)
 
 -   Użyte biblioteki:
-
--   [Material-UI](https://material-ui.com)
-
--   [og-parser](https://www.npmjs.com/package/og-parser)
-
--   [rss-parser](https://www.npmjs.com/package/rss-parser)
-
--   [styled-normalize](https://www.npmjs.com/package/styled-normalize)
+    -   [Material-UI](https://material-ui.com)
+    -   [og-parser](https://www.npmjs.com/package/og-parser)
+    -   [rss-parser](https://www.npmjs.com/package/rss-parser)
+    -   [styled-normalize](https://www.npmjs.com/package/styled-normalize)
